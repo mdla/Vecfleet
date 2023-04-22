@@ -1,6 +1,5 @@
 using AutoMapper;
-using Vecfleet.Application.Brands.Dto;
-using Vecfleet.Application.UseCases.Brands.Dto;
+using Vecfleet.Application.Dtos.Common;
 using Vecfleet.Domain.Entities;
 
 namespace Vecfleet.Application.Maps;

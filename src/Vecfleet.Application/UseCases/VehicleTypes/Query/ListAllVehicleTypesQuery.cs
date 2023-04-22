@@ -7,31 +7,31 @@ using Vecfleet.Application.Interfaces;
 using Vecfleet.Application.Interfaces.Common;
 using Vecfleet.Application.Interfaces.Response;
 
-namespace Vecfleet.Application.UseCases.Brands.Query;
+namespace Vecfleet.Application.UseCases.VehicleTypes.Query;
 
 #region Contracts
 
-public class ListAllBrandResponse : IListDtoResponse<BrandDto>
+public class ListAllVehicleTypesResponse : IListDtoResponse<VehicleTypeDto>
 {
     public Result Result { get; set; }
-    public List<BrandDto> Data { get; set; }
+    public List<VehicleTypeDto> Data { get; set; }
 }
 
 #endregion
 
 #region command
 
-public class ListAllBrandQuery : IRequest<ListAllBrandResponse>
+public class ListAllVehicleTypesQuery : IRequest<ListAllVehicleTypesResponse>
 {
 }
 
-public class ListAllBrandQueryHandler : IRequestHandler<ListAllBrandQuery, ListAllBrandResponse>
+public class ListVehicleTypesQueryHandler : IRequestHandler<ListAllVehicleTypesQuery, ListAllVehicleTypesResponse>
 {
-    private readonly ILogger<ListAllBrandQueryHandler> _logger;
+    private readonly ILogger<ListVehicleTypesQueryHandler> _logger;
     private readonly ISimpleCrudDbContext _dbContext;
     private readonly IMapper _mapper;
 
-    public ListAllBrandQueryHandler(ILogger<ListAllBrandQueryHandler> logger, ISimpleCrudDbContext dbContext,
+    public ListVehicleTypesQueryHandler(ILogger<ListVehicleTypesQueryHandler> logger, ISimpleCrudDbContext dbContext,
         IMapper mapper)
     {
         _logger = logger;
@@ -39,21 +39,21 @@ public class ListAllBrandQueryHandler : IRequestHandler<ListAllBrandQuery, ListA
         _mapper = mapper;
     }
 
-    public async Task<ListAllBrandResponse> Handle(ListAllBrandQuery request, CancellationToken cancellationToken)
+    public async Task<ListAllVehicleTypesResponse> Handle(ListAllVehicleTypesQuery request, CancellationToken cancellationToken)
     {
         try
         {
-            var result = await _dbContext.Brands.OrderBy(x => x.Name).ToListAsync(cancellationToken);
+            var result = await _dbContext.VehicleTypes.OrderBy(x => x.Description).ToListAsync(cancellationToken);
             
             return new()
             {
                 Result = Result.Successful(),
-                Data = _mapper.Map<List<BrandDto>>(result)
+                Data = _mapper.Map<List<VehicleTypeDto>>(result)
             };
         }
         catch (Exception e)
         {
-            _logger.LogError(e, "Error listando Marcas");
+            _logger.LogError(e, "Error listando Tipo de vehiculos");
             return new()
             {
                 Result = Result.FailWithException(e),

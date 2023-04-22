@@ -4,9 +4,10 @@ using FluentValidation.Results;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using Vecfleet.Application.Brands.Dto;
-using Vecfleet.Application.Dtos;
+using Vecfleet.Application.Dtos.Common;
 using Vecfleet.Application.Interfaces;
+using Vecfleet.Application.Interfaces.Common;
+using Vecfleet.Application.Interfaces.Response;
 using Vecfleet.Domain.Entities;
 
 namespace Vecfleet.Application.Brands.Commands;

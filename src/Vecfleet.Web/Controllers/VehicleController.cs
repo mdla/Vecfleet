@@ -1,4 +1,3 @@
-using FluentValidation.Results;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
@@ -7,6 +6,7 @@ using Vecfleet.Application.Brands.Commands;
 namespace Vecfleet.Controllers;
 
 [ApiController]
+[Route("vehicle")]
 public class VehicleController: BaseController
 {
     private readonly ISender _mediator;
@@ -27,6 +27,5 @@ public class VehicleController: BaseController
         CreateVehicleResponse result= await _mediator.Send(new CreateVehicleCommand(request));
 
         return HandleResult(result.Result, result, StatusCodes.Status201Created);
-
     }
 }

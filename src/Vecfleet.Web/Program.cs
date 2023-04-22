@@ -40,9 +40,11 @@ using (var scope = app.Services.CreateScope())
 
         if (context.Database.IsSqlServer())
         {
-            context.Database.EnsureCreated();
             context.Database.Migrate();
         }
+
+        await SimpleCrudDbContextSeed.CreateBrandsAndModels(context);
+        await SimpleCrudDbContextSeed.CreateVehicleTypes(context);
     }
     catch (Exception ex)
     {

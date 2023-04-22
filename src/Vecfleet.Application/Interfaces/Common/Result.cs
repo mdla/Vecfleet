@@ -1,4 +1,4 @@
-namespace Vecfleet.Application.Dtos;
+namespace Vecfleet.Application.Interfaces.Common;
 
 public class Result
 {

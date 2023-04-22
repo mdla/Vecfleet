@@ -14,7 +14,9 @@ public static class AddInfrastructureDi
     public static void AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddDbContext<SimpleCrudDbContext>(
-            options => options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
+            options => options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"), builder =>
+                builder.MigrationsAssembly(typeof(SimpleCrudDbContext).Assembly.FullName)
+                ));
         
         services.AddScoped<ISimpleCrudDbContext>(provider => provider.GetService<SimpleCrudDbContext>());
     }

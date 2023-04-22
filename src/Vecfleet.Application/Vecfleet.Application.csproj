@@ -21,7 +21,6 @@
 
     <ItemGroup>
       <Folder Include="Interfaces\Request\" />
-      <Folder Include="UseCases\Models\" />
       <Folder Include="UseCases\Vehicles\Query\" />
       <Folder Include="UseCases\VehicleTypes\" />
     </ItemGroup>

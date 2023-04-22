@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
-using Vecfleet.Application.Dtos;
+using Vecfleet.Application.Interfaces.Common;
 
 namespace Vecfleet.Controllers;
 

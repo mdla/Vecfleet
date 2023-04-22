@@ -1,6 +1,4 @@
-using Vecfleet.Application.UseCases.Brands.Dto;
-
-namespace Vecfleet.Application.Brands.Dto;
+namespace Vecfleet.Application.Dtos.Common;
 
 public class VehicleDto
 {

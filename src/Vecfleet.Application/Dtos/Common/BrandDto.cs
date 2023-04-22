@@ -1,4 +1,9 @@
-using Vecfleet.Application.UseCases.Brands.Dto;
+namespace Vecfleet.Application.Dtos.Common;
 
-namespace Vecfleet.Application.Brands.Dto;
+public class BrandDto
+{
+    public int Id { get; set; }
+    public string Name { get; set; }
+    public List<ModelDto> Models { get; set; } = new();
+}
 

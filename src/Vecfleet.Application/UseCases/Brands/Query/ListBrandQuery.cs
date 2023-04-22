@@ -43,8 +43,11 @@ public class ListAllBrandQueryHandler : IRequestHandler<ListAllBrandQuery, ListA
     {
         try
         {
-            var result = await _dbContext.Brands.OrderBy(x => x.Name).ToListAsync(cancellationToken);
-            
+            var result = await _dbContext.Brands
+                .Include(x => x.Models)
+                .OrderBy(x => x.Name)
+                .ToListAsync(cancellationToken);
+
             return new()
             {
                 Result = Result.Successful(),

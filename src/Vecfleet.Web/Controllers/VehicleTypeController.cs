@@ -1,7 +1,6 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
-using Vecfleet.Application.Brands.Commands;
 using Vecfleet.Application.UseCases.Brands.Query;
 using Vecfleet.Application.UseCases.VehicleTypes.Query;
 

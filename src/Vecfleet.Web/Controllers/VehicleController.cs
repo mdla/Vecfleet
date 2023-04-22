@@ -1,7 +1,7 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
-using Vecfleet.Application.Brands.Commands;
+using Vecfleet.Application.UseCases.Vehicles.Commands;
 
 namespace Vecfleet.Controllers;
 
@@ -27,5 +27,31 @@ public class VehicleController: BaseController
         CreateVehicleResponse result= await _mediator.Send(new CreateVehicleCommand(request));
 
         return HandleResult(result.Result, result, StatusCodes.Status201Created);
+    }
+    
+    
+    [HttpPut]
+    [SwaggerOperation(Description = "Actualiza un vehiculo.")]
+    [ProducesResponseType(typeof(UpdateVehicleResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(Dictionary<string,string>), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(UpdateVehicleResponse), StatusCodes.Status500InternalServerError)]
+    public async Task<IActionResult> Udpate(UpdateVehicleRequest request)
+    {
+        UpdateVehicleResponse result= await _mediator.Send(new UpdateVehicleCommand(request));
+
+        return HandleResult(result.Result, result);
+    }
+    
+    
+    [HttpDelete]
+    [SwaggerOperation(Description = "Borra un vehiculo.")]
+    [ProducesResponseType(typeof(DeleteVehicleResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(Dictionary<string,string>), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(DeleteVehicleResponse), StatusCodes.Status500InternalServerError)]
+    public async Task<IActionResult> Delete(DeleteVehicleRequest request)
+    {
+        DeleteVehicleResponse result= await _mediator.Send(new DeleteVehicleCommand(request));
+
+        return HandleResult(result.Result, result);
     }
 }

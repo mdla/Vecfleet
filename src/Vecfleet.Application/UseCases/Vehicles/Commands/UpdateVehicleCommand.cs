@@ -15,10 +15,11 @@ namespace Vecfleet.Application.UseCases.Vehicles.Commands;
 #region Contracts
 
 /// <summary>
-/// Dto encargado de contener los datos del vehiculos a dara de alta
+/// Dto encargado de contener los datos del vehiculos a modificar
 /// </summary>
-public class CreateVehicleRequest
+public class UpdateVehicleRequest
 {
+    public int Id { get; set; }
     public int VehicleTypeId { get; set; }
 
     public int Wheels { get; set; }
@@ -34,7 +35,7 @@ public class CreateVehicleRequest
     public long Kilometers { get; set; }
 }
 
-public class CreateVehicleResponse : IResponse, IData<VehicleDto>
+public class UpdateVehicleResponse : IResponse, IData<VehicleDto>
 {
     public Result Result { get; set; }
     public VehicleDto Data { get; set; }
@@ -44,26 +45,26 @@ public class CreateVehicleResponse : IResponse, IData<VehicleDto>
 
 #region command
 
-public class CreateVehicleCommand : IRequest<CreateVehicleResponse>
+public class UpdateVehicleCommand : IRequest<UpdateVehicleResponse>
 {
-    public readonly CreateVehicleRequest _dto;
+    public readonly UpdateVehicleRequest _dto;
 
-    public CreateVehicleCommand(CreateVehicleRequest dto)
+    public UpdateVehicleCommand(UpdateVehicleRequest dto)
     {
         _dto = dto;
     }
 }
 
-public class CreateVehicleCommandHandler : IRequestHandler<CreateVehicleCommand, CreateVehicleResponse>
+public class UpdateVehicleCommandHandler : IRequestHandler<UpdateVehicleCommand, UpdateVehicleResponse>
 {
-    private readonly ILogger<CreateVehicleCommandHandler> _logger;
+    private readonly ILogger<UpdateVehicleCommandHandler> _logger;
     private readonly ISimpleCrudDbContext _dbContext;
-    private readonly IValidator<CreateVehicleRequest> _validator;
+    private readonly IValidator<UpdateVehicleRequest> _validator;
     private readonly IMapper _mapper;
 
-    public CreateVehicleCommandHandler(ILogger<CreateVehicleCommandHandler> logger
+    public UpdateVehicleCommandHandler(ILogger<UpdateVehicleCommandHandler> logger
         , ISimpleCrudDbContext dbContext
-        , IValidator<CreateVehicleRequest> validator
+        , IValidator<UpdateVehicleRequest> validator
         , IMapper mapper)
     {
         _logger = logger;
@@ -72,7 +73,7 @@ public class CreateVehicleCommandHandler : IRequestHandler<CreateVehicleCommand,
         _mapper = mapper;
     }
 
-    public async Task<CreateVehicleResponse> Handle(CreateVehicleCommand request, CancellationToken cancellationToken)
+    public async Task<UpdateVehicleResponse> Handle(UpdateVehicleCommand request, CancellationToken cancellationToken)
     {
         try
         {
@@ -94,6 +95,9 @@ public class CreateVehicleCommandHandler : IRequestHandler<CreateVehicleCommand,
                 };
             }
 
+            Vehicle? vehicle =
+                await _dbContext.Vehicles.FirstOrDefaultAsync(x => x.Id == request._dto.Id, cancellationToken);
+
             VehicleType? type =
                 await _dbContext.VehicleTypes.FirstOrDefaultAsync(x => x.Id == request._dto.VehicleTypeId,
                     cancellationToken);
@@ -104,6 +108,8 @@ public class CreateVehicleCommandHandler : IRequestHandler<CreateVehicleCommand,
 
             var errors = new List<string>();
 
+            if (vehicle is null)
+                errors.Add("No existe el vehiculo.");
             if (type is null)
                 errors.Add("No existe el tipo.");
             if (brand is null)
@@ -127,19 +133,15 @@ public class CreateVehicleCommandHandler : IRequestHandler<CreateVehicleCommand,
 
             #region Persistencia
 
-            Vehicle vehicle = new Vehicle
-            {
-                VehicleTypeId = request._dto.VehicleTypeId,
-                Wheels = request._dto.Wheels,
-                BrandId = request._dto.BrandId,
-                ModelId = request._dto.ModelId,
-                Patent = request._dto.Patent,
-                ChassisNumber = request._dto.ChassisNumber,
-                Kilometers = request._dto.Kilometers
-            };
+            vehicle.VehicleTypeId = request._dto.VehicleTypeId;
+            vehicle.Wheels = request._dto.Wheels;
+            vehicle.BrandId = request._dto.BrandId;
+            vehicle.ModelId = request._dto.ModelId;
+            vehicle.Patent = request._dto.Patent;
+            vehicle.ChassisNumber = request._dto.ChassisNumber;
+            vehicle.Kilometers = request._dto.Kilometers;
 
-            await _dbContext.Vehicles.AddAsync(vehicle, cancellationToken);
-            var result = await _dbContext.SaveChangesAsync();
+            await _dbContext.SaveChangesAsync();
             return new()
             {
                 Result = Result.Successful(),
@@ -163,10 +165,14 @@ public class CreateVehicleCommandHandler : IRequestHandler<CreateVehicleCommand,
 
 #region Validator
 
-public class CreateVehicleRequestValidator : AbstractValidator<CreateVehicleRequest>
+public class UpdateVehicleRequestValidator : AbstractValidator<UpdateVehicleRequest>
 {
-    public CreateVehicleRequestValidator()
+    public UpdateVehicleRequestValidator()
     {
+        RuleFor(x => x.Id)
+            .NotEmpty()
+            .GreaterThanOrEqualTo(0)
+            .WithMessage("Debe tener Id.");
         RuleFor(x => x.Kilometers)
             .NotEmpty()
             .GreaterThanOrEqualTo(0)

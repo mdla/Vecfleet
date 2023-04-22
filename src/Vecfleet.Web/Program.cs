@@ -13,7 +13,7 @@ builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(c => c.EnableAnnotations());
 
 // Por el momento voy a permitir el consumo de la aipi desde cualquier cliente
 builder.Services.AddCors(options =>

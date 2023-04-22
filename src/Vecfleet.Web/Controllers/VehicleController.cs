@@ -2,6 +2,7 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 using Vecfleet.Application.UseCases.Vehicles.Commands;
+using Vecfleet.Application.UseCases.Vehicles.Query;
 
 namespace Vecfleet.Controllers;
 
@@ -16,6 +17,17 @@ public class VehicleController: BaseController
         _mediator = mediator;
     }
 
+    
+    [HttpGet]
+    [SwaggerOperation(Description = "Filtra todos las vehiculos.")]
+    [ProducesResponseType(typeof(ListAllVehicleByFilterResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ListAllVehicleByFilterResponse), StatusCodes.Status500InternalServerError)]
+    public async Task<IActionResult> Get([FromQuery]ListAllVehicleByFilterRequest request)
+    {
+        ListAllVehicleByFilterResponse result= await _mediator.Send(new ListAllVehicleByFilterQuery(request));
+
+        return HandleResult(result.Result, result);
+    }
 
     [HttpPost()]
     [SwaggerOperation(Description = "Crea un vehiculo.")]

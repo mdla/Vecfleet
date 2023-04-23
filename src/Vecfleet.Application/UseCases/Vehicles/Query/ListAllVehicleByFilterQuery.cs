@@ -62,6 +62,7 @@ public class
             var result = await _dbContext.Vehicles
                 .Include(x => x.Brand)
                 .Include(x => x.Model)
+                .Include(x => x.VehicleType)
                 .Where(x => (request._request.BrandId == null || x.BrandId == request._request.BrandId)
                             && (request._request.ModelId == null || x.ModelId == request._request.ModelId))
                 .OrderBy(x => x.Patent)

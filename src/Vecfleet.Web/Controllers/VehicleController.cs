@@ -60,7 +60,7 @@ public class VehicleController: BaseController
     [ProducesResponseType(typeof(DeleteVehicleResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Dictionary<string,string>), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(DeleteVehicleResponse), StatusCodes.Status500InternalServerError)]
-    public async Task<IActionResult> Delete(DeleteVehicleRequest request)
+    public async Task<IActionResult> Delete([FromBody]DeleteVehicleRequest request)
     {
         DeleteVehicleResponse result= await _mediator.Send(new DeleteVehicleCommand(request));
 

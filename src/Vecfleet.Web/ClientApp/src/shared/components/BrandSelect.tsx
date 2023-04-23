@@ -1,12 +1,15 @@
 import {FormLabel, FormSelect} from "react-bootstrap";
 import {useModel} from "../hooks/useModel";
 import {useBrands} from "../hooks/useBrand";
+import {FocusEventHandler} from "react";
 
 interface IProps {
     onChange: React.ChangeEventHandler<HTMLSelectElement>,
+    onBlur: FocusEventHandler<HTMLSelectElement> | undefined;
     id: string,
     name: string,
-    brandId?: number
+    brandId?: number,
+    value?: number
 }
 
 const BrandSelect = (props: IProps): JSX.Element => {
@@ -18,8 +21,12 @@ const BrandSelect = (props: IProps): JSX.Element => {
         <>
             {isLoading && <div>Cargando Marca...</div>}
             <FormLabel htmlFor={props.id}>Marca</FormLabel>
-            <FormSelect id={props.id} name={props.name} onChange={props.onChange} value={props.brandId}>
-                <option>Seleccione una Marca</option>
+            <FormSelect id={props.id}
+                        name={props.name}
+                        onChange={props.onChange}
+                        value={props.brandId}
+                        onBlur={props.onBlur}>
+                <option value={""}>Seleccione una Marca</option>
                 {brands.map(item => (
                     <option key={item.id} value={item.id}>{item.name}</option>
                 ))}

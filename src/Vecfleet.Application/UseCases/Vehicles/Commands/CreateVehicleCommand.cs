@@ -102,6 +102,12 @@ public class CreateVehicleCommandHandler : IRequestHandler<CreateVehicleCommand,
             Model? model =
                 await _dbContext.Models.FirstOrDefaultAsync(x => x.Id == request._dto.ModelId, cancellationToken);
 
+            Vehicle? vehiclePatent =
+                await _dbContext.Vehicles.FirstOrDefaultAsync(x => x.Patent.ToUpper() == request._dto.Patent.ToUpper());
+            
+            Vehicle? vehicleChassisNumber =
+                await _dbContext.Vehicles.FirstOrDefaultAsync(x => x.ChassisNumber.ToUpper() == request._dto.ChassisNumber.ToUpper());
+
             var errors = new List<string>();
 
             if (type is null)
@@ -110,6 +116,12 @@ public class CreateVehicleCommandHandler : IRequestHandler<CreateVehicleCommand,
                 errors.Add("No existe la marca.");
             if (model is null)
                 errors.Add("No existe el modelo.");
+            
+            if (vehiclePatent is not null)
+                errors.Add("Existe un vehículo con la misma patente.");
+            
+            if (vehicleChassisNumber is not null)
+                errors.Add("Existe un vehículo con el mismo número de chasis.");
 
             if (errors.Any())
                 return new()
@@ -133,8 +145,8 @@ public class CreateVehicleCommandHandler : IRequestHandler<CreateVehicleCommand,
                 Wheels = request._dto.Wheels,
                 BrandId = request._dto.BrandId,
                 ModelId = request._dto.ModelId,
-                Patent = request._dto.Patent,
-                ChassisNumber = request._dto.ChassisNumber,
+                Patent = request._dto.Patent.ToUpperInvariant(),
+                ChassisNumber = request._dto.ChassisNumber.ToUpperInvariant(),
                 Kilometers = request._dto.Kilometers
             };
 
@@ -168,7 +180,6 @@ public class CreateVehicleRequestValidator : AbstractValidator<CreateVehicleRequ
     public CreateVehicleRequestValidator()
     {
         RuleFor(x => x.Kilometers)
-            .NotEmpty()
             .GreaterThanOrEqualTo(0)
             .WithMessage("Los kilometros deben ser mayores a 0.");
         RuleFor(x => x.ChassisNumber)

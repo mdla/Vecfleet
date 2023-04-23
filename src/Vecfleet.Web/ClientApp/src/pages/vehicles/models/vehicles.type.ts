@@ -13,3 +13,17 @@ export interface VehicleDto {
     chassisNumber: string;
     kilometers: number;
 }
+
+export interface VehicleTableDto {
+    id: number;
+    vehicleType: string;
+    vehicleTypeId: number;
+    wheels: number;
+    brand: string;
+    brandId: number;
+    model: string;
+    modelId: number;
+    patent: string;
+    chassisNumber: string;
+    kilometers: number;
+}

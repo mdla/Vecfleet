@@ -1,12 +1,14 @@
 import { FormLabel, FormSelect} from "react-bootstrap";
 import {useModel} from "../hooks/useModel";
+import {FocusEventHandler} from "react";
 
 interface IProps {
     id: string,
     name: string,
     onChange: React.ChangeEventHandler<HTMLSelectElement>
+    onBlur: FocusEventHandler<HTMLSelectElement> | undefined;
     brandId: number|null,
-    modelId?: number,
+    value?: number
 }
 
 const ModelSelect = (props: IProps) => {
@@ -15,7 +17,10 @@ const ModelSelect = (props: IProps) => {
     if (!props.brandId)
         return <>
             <FormLabel htmlFor={props.id}>Modelo</FormLabel>
-            <FormSelect id={props.id} name={props.name} onChange={props.onChange}>
+            <FormSelect id={props.id}
+                        name={props.name}
+                        onChange={props.onChange}
+                        onBlur={props.onBlur}>
                 <option>Seleccione una Modelo</option>
             </FormSelect>
         </>
@@ -26,8 +31,8 @@ const ModelSelect = (props: IProps) => {
         <>
             {isLoading && <div>Cargando Modelo...</div>}
             <FormLabel htmlFor={props.id}>Modelos</FormLabel>
-            <FormSelect id={props.id} name={props.name} onChange={props.onChange} value={props.modelId}>
-                <option>Seleccione una Modelo</option>
+            <FormSelect id={props.id} name={props.name} onChange={props.onChange} value={props.value}>
+                <option value={""}>Seleccione un Modelo</option>
                 {brands.map(item => (
                     <option key={item.id} value={item.id}>{item.description}</option>
                 ))}

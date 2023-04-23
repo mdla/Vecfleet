@@ -11,7 +11,7 @@ export const getVehicles = async (brandId: number | null, modelId: number | null
         throw Error(value.result.errors[0])
     return value.data;
 }).catch(reason => {
-    throw Error(reason);
+    throw reason;
 });
 
 export const createVehicles = async (vehicle: VehicleDto) => await postData<IDataResponse<VehicleDto>>(EndpointConst.CREATE_VEHICLES, vehicle).then(value => {
@@ -19,7 +19,7 @@ export const createVehicles = async (vehicle: VehicleDto) => await postData<IDat
         throw Error(value.result.errors[0])
     return value.data;
 }).catch(reason => {
-    throw Error(reason);
+    throw reason;
 });
 
 export const updateVehicles = async (vehicle: VehicleDto) => await putData<IDataResponse<VehicleDto>>(EndpointConst.UPDATE_VEHICLES, vehicle).then(value => {
@@ -27,13 +27,13 @@ export const updateVehicles = async (vehicle: VehicleDto) => await putData<IData
         throw Error(value.result.errors[0])
     return value.data;
 }).catch(reason => {
-    throw Error(reason);
+    throw reason;
 });
 
-export const deleteVehicles = async (vehicle: VehicleDto) => await deleteData<IDataResponse<VehicleDto>>(EndpointConst.DELETE_VEHICLES, vehicle).then(value => {
+export const deleteVehicles = async (id: number) => await deleteData<IDataResponse<VehicleDto>>(EndpointConst.DELETE_VEHICLES, {id}).then(value => {
     if (!value.result.success)
         throw Error(value.result.errors[0])
     return value.data;
 }).catch(reason => {
-    throw Error(reason);
+    throw reason;
 });

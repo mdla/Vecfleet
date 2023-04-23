@@ -105,6 +105,12 @@ public class UpdateVehicleCommandHandler : IRequestHandler<UpdateVehicleCommand,
                 await _dbContext.Brands.FirstOrDefaultAsync(x => x.Id == request._dto.BrandId, cancellationToken);
             Model? model =
                 await _dbContext.Models.FirstOrDefaultAsync(x => x.Id == request._dto.ModelId, cancellationToken);
+            
+            Vehicle? vehiclePatent =
+                await _dbContext.Vehicles.FirstOrDefaultAsync(x => x.Patent.ToUpper() == request._dto.Patent.ToUpper() && x.Id != request._dto.Id);
+            
+            Vehicle? vehicleChassisNumber =
+                await _dbContext.Vehicles.FirstOrDefaultAsync(x => x.ChassisNumber.ToUpper() == request._dto.ChassisNumber.ToUpper()&& x.Id != request._dto.Id);
 
             var errors = new List<string>();
 
@@ -116,6 +122,12 @@ public class UpdateVehicleCommandHandler : IRequestHandler<UpdateVehicleCommand,
                 errors.Add("No existe la marca.");
             if (model is null)
                 errors.Add("No existe el modelo.");
+            
+            if (vehiclePatent is not null)
+                errors.Add("Existe un vehículo con la misma patente.");
+            
+            if (vehicleChassisNumber is not null)
+                errors.Add("Existe un vehículo con el mismo número de chasis.");
 
             if (errors.Any())
                 return new()

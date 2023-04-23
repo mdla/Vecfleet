@@ -37,6 +37,10 @@ const VehicleFilters = (props: Props) => {
     ): void => {
         void getVehicles(values.brandId, values.modelId,).then((response: VehicleDto[]) => {
             setVehicles(response);
+            actions.setSubmitting(false);
+        }).catch(reason => {
+            actions.setSubmitting(false);
+            throw new Error(reason);
         });
     };
 
@@ -48,29 +52,26 @@ const VehicleFilters = (props: Props) => {
 
     return (
         <>
-            <Row>
-                <Col>
-                    <p>
-                        Estado: {JSON.stringify(formik.values)}
-                    </p>
-                </Col>
-            </Row>
             <Row className={"align-items-center"}>
                 <Col className={"text-center"}>
-                    <Form onSubmit={formik.handleSubmit}>
+                    <Form onSubmit={formik.handleSubmit} noValidate={false}>
                         <Row className={"align-items-center"}>
                             <FormGroup as={Col} md={4} sm={10}>
                                 <BrandSelect key={"brand-select"}
                                              name={"brandId"}
                                              id={"brandId"}
-                                             onChange={formik.handleChange}/>
+                                             onChange={formik.handleChange}
+                                             onBlur={formik.handleBlur}
+                                />
                             </FormGroup>
                             <FormGroup as={Col} md={4} sm={10}>
                                 <ModelSelect key={"model-select"}
                                              name={"modelId"}
                                              id={"modelId"}
                                              brandId={formik.values.brandId}
-                                             onChange={formik.handleChange}/>
+                                             onChange={formik.handleChange}
+                                             onBlur={formik.handleBlur}
+                                />
                             </FormGroup>
                             <FormGroup as={Col} md={2} sm={10} className={"justify-content-md-start"}>
                                 <Button variant="primary" type="submit" disabled={formik.isSubmitting} >

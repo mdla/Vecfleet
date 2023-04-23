@@ -9,8 +9,7 @@ export const getData = async <T>(endpoint: string, param: any): Promise<T> => {
             return response.data;
         })
         .catch(function (error) {
-            console.log(error);
-            throw Error(error);
+            throw error;
         });
 };
 
@@ -24,14 +23,13 @@ export const postData = async <T>(endpoint: string, data: any): Promise<T> => {
             return response.data;
         })
         .catch(function (error) {
-            console.log(error);
-            throw Error(error);
+            throw error;
         });
 };
 
 export const putData = async <T>(endpoint: string, data: any): Promise<T> => {
     return await axios
-        .put<T>(endpoint, data)
+        .put<T>(endpoint, {data})
         .then(function (response) {
             if (response instanceof AxiosError) {
                 throw Error(response.message);
@@ -40,21 +38,18 @@ export const putData = async <T>(endpoint: string, data: any): Promise<T> => {
         })
         .catch(function (error) {
             console.log(error);
-            throw Error(error);
+            throw error;
         });
 };
 
 export const deleteData = async <T>(endpoint: string, data: any): Promise<T> => {
     return await axios
-        .delete<T>(endpoint, data)
+        .delete<T>(endpoint, {data})
         .then(function (response) {
-            if (response instanceof AxiosError) {
-                throw Error(response.message);
-            }
             return response.data;
         })
         .catch(function (error) {
             console.log(error);
-            throw Error(error);
+            throw error;
         });
 };

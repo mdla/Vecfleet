@@ -9,12 +9,13 @@ import VehicleCrudModal from "./VehicleCrudModal";
 import useErrorHandler from "../../../shared/hooks/useErrorHandler";
 
 interface Props {
-
+    vehicles: VehicleTableDto[];
 }
 
-const VehicleTable = (props: Props): JSX.Element => {
+const VehicleTable = (): JSX.Element => {
 
-    const {vehicles, remove, setShowModal, setSelectedVehicle, clearSelectedVehicle} = useVehicleStore();
+    const {remove, setShowModal, setSelectedVehicle, clearSelectedVehicle} = useVehicleStore();
+    const vehicles = useVehicleStore(state => state.vehicles);
     const {handleError} = useErrorHandler();
 
     function handleDelete(value: CellValue<string> | CellValue<number> | CellValue<any>) {
@@ -25,17 +26,10 @@ const VehicleTable = (props: Props): JSX.Element => {
         });
     }
 
-
     function handleEdit(value: CellValue<string> | CellValue<number> | CellValue<any>) {
         const id = Number(value);
-        debugger;
-        if (vehicles) {
-            const vehicle = vehicles.find(value1 => value1.id === id);
-            if (vehicle) {
-                setSelectedVehicle(vehicle);
-                setShowModal(true);
-            }
-        }
+        setSelectedVehicle(id);
+        setShowModal(true);
     }
 
     const columns = useMemo<Column<VehicleTableDto>[]>(
@@ -88,7 +82,7 @@ const VehicleTable = (props: Props): JSX.Element => {
 
     let tableInstance: any = useTable({
         columns,
-        data: vehicles.slice(),
+        data: vehicles,
 
     }, useSortBy, usePagination);
     tableInstance = {...tableInstance, initialState: {pageSize: 10},}
@@ -150,9 +144,6 @@ const VehicleTable = (props: Props): JSX.Element => {
                         })}
                         </tbody>
                     </Table>
-                    <div> page sieze:{pageSize}</div>
-                    <div> {pageIndex + 1} of {pageOptions.length}</div>
-
                     <Pagination>
                         <Pagination.First key={"first"} onClick={() => gotoPage(0)}
                                           disabled={!canPreviousPage}></Pagination.First>

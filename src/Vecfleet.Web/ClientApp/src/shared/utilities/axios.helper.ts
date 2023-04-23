@@ -29,7 +29,7 @@ export const postData = async <T>(endpoint: string, data: any): Promise<T> => {
 
 export const putData = async <T>(endpoint: string, data: any): Promise<T> => {
     return await axios
-        .put<T>(endpoint, {data})
+        .put<T>(endpoint, data)
         .then(function (response) {
             if (response instanceof AxiosError) {
                 throw Error(response.message);

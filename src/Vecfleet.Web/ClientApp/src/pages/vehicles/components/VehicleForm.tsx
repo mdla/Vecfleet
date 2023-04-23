@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {Form, Button, Row, Col, FormLabel, FormGroup, FormControl} from "react-bootstrap";
 import {FormikHelpers, useFormik} from "formik";
 import * as Yup from "yup";
@@ -28,19 +28,22 @@ interface IFormValuesDto {
     kilometers: number;
 };
 
-let initialValues: IFormValuesDto = {
-    id: 0,
-    vehicleTypeId: 0,
-    wheels: 0,
-    brandId: 0,
-    modelId: 0,
-    patent: "",
-    chassisNumber: "",
-    kilometers: 0,
-}
+
 const VehicleForm = (props: Props): JSX.Element => {
+    
     const {add, update} = useVehicleStore();
     const {handleError}= useErrorHandler();
+
+    let initialValues: IFormValuesDto = {
+        id: 0,
+        vehicleTypeId: 0,
+        wheels: 0,
+        brandId: 0,
+        modelId: 0,
+        patent: "",
+        chassisNumber: "",
+        kilometers: 0,
+    }
 
     if (props.dto !== null) {
         initialValues = {
@@ -54,6 +57,11 @@ const VehicleForm = (props: Props): JSX.Element => {
             kilometers: props.dto.kilometers,
         }
     }
+
+    useEffect(() => {
+        debugger;
+        formik.resetForm();
+    },[props.dto])
 
     const onSubmit = (values: IFormValuesDto, formikHelpers: FormikHelpers<IFormValuesDto>) => {
 
@@ -95,15 +103,15 @@ const VehicleForm = (props: Props): JSX.Element => {
         validationSchema: Yup.object({
             vehicleTypeId: Yup.number()
                 .typeError('Este campo es requerido.')
-                .min(0, 'Debe ser mayor a cero.')
+                .min(1, 'Este campo es requerido.')
                 .required('Este campo es requerido.'),
             brandId: Yup.number()
                 .typeError('Este campo es requerido.')
-                .min(0, 'Debe ser mayor a cero.')
+                .min(1, 'Este campo es requerido.')
                 .required('Este campo es requerido.'),
             modelId: Yup.number()
                 .typeError('Este campo es requerido.')
-                .min(0, 'Debe ser mayor a cero.')
+                .min(1, 'Este campo es requerido.')
                 .required('Este campo es requerido.'),
             patent: Yup.string().required("Este campo es requerido."),
             chassisNumber: Yup.string().required("Este campo es requerido."),
@@ -124,7 +132,7 @@ const VehicleForm = (props: Props): JSX.Element => {
         <>
             <Form noValidate onSubmit={formik.handleSubmit}>
                 <Row>
-                    <Col xs={12} sm={6}>
+                    <Col xs={12} sm={12} xl={12}>
                         <FormGroup>
                             <VehicleTypeSelect onChange={formik.handleChange}
                                                onBlur={formik.handleBlur}
@@ -139,7 +147,7 @@ const VehicleForm = (props: Props): JSX.Element => {
                 </Row>
 
                 <Row>
-                    <Col xs={12} sm={6}>
+                    <Col xs={12} sm={12} xl={12}>
                         <FormGroup>
                             <BrandSelect onChange={formik.handleChange} id={"brandId"}
                                          onBlur={formik.handleBlur}
@@ -152,7 +160,7 @@ const VehicleForm = (props: Props): JSX.Element => {
                     </Col>
                 </Row>
                 <Row>
-                    <Col xs={12} sm={6}>
+                    <Col xs={12} sm={12} xl={12}>
                         <FormGroup>
                             <ModelSelect onChange={formik.handleChange} id={"modelId"}
                                          onBlur={formik.handleBlur}
@@ -165,7 +173,7 @@ const VehicleForm = (props: Props): JSX.Element => {
                     </Col>
                 </Row>
                 <Row>
-                    <Col xs={12} sm={6}>
+                    <Col xs={12} sm={12} xl={12}>
                         <FormGroup>
                             <FormLabel htmlFor={"patent"}>Patente</FormLabel>
                             <FormControl
@@ -185,7 +193,7 @@ const VehicleForm = (props: Props): JSX.Element => {
                     </Col>
                 </Row>
                 <Row>
-                    <Col xs={12} sm={6}>
+                    <Col xs={12} sm={12} xl={12}>
                         <FormGroup>
                             <FormLabel htmlFor={"chassisNumber"}>Número de chasis</FormLabel>
                             <FormControl
@@ -205,7 +213,7 @@ const VehicleForm = (props: Props): JSX.Element => {
                     </Col>
                 </Row>
                 <Row>
-                    <Col xs={12} sm={6}>
+                    <Col xs={12} sm={12} xl={12}>
                         <FormGroup>
                             <FormLabel htmlFor={"kilometers"}>Kilómetros</FormLabel>
                             <FormControl
@@ -225,7 +233,7 @@ const VehicleForm = (props: Props): JSX.Element => {
                     </Col>
                 </Row>
                 <Row>
-                    <Col xs={12} sm={6}>
+                    <Col xs={12} sm={12} xl={12}>
                         <FormGroup>
                             <FormLabel htmlFor={"wheels"}>Ruedas</FormLabel>
                             <FormControl
@@ -244,7 +252,7 @@ const VehicleForm = (props: Props): JSX.Element => {
                         </FormGroup>
                     </Col>
                 </Row>
-                <Row className={"mt-1"}>
+                <Row className={"mt-2"}>
                     <Col>
                         <Button variant="primary" type="submit" disabled={formik.isSubmitting || !formik.isValid}>
                             Guardar

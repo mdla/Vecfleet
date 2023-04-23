@@ -7,6 +7,7 @@ using Microsoft.Extensions.Logging;
 using Vecfleet.Application.Dtos.Common;
 using Vecfleet.Application.Interfaces;
 using Vecfleet.Application.Interfaces.Common;
+using Vecfleet.Application.Interfaces.Request;
 using Vecfleet.Application.Interfaces.Response;
 using Vecfleet.Domain.Entities;
 
@@ -17,7 +18,7 @@ namespace Vecfleet.Application.UseCases.Vehicles.Commands;
 /// <summary>
 /// Dto encargado de contener el id del vehiculo al borrar.
 /// </summary>
-public class DeleteVehicleRequest
+public class DeleteVehicleRequest :IIdRequest<int>
 {
     public int Id { get; set; }
 }

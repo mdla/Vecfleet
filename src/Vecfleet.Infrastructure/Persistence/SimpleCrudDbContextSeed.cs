@@ -10,54 +10,191 @@ public static class SimpleCrudDbContextSeed
         List<Brand> brands = new List<Brand>()
         {
             new()
+    {
+        Name = "Ford",
+        Models = new List<Model>()
+        {
+            new()
             {
-                Name = "Ford",
-                Models = new List<Model>()
-                {
-                    new()
-                    {
-                        Description = "Fiesta"
-                    },
-                    new()
-                    {
-                        Description = "Focus"
-                    },
-                    new()
-                    {
-                        Description = "Ecosport"
-                    }
-                }
+                Description = "Fiesta"
             },
             new()
             {
-                Name = "Chevrolet",
-                Models = new List<Model>()
-                {
-                    new()
-                    {
-                        Description = "Cruze"
-                    },
-                    new()
-                    {
-                        Description = "Onix"
-                    }
-                }
+                Description = "Focus"
             },
             new()
             {
-                Name = "Fiat",
-                Models = new List<Model>()
-                {
-                    new()
-                    {
-                        Description = "Argo"
-                    },
-                    new()
-                    {
-                        Description = "Cronos"
-                    }
-                }
+                Description = "Ecosport"
+            },
+            new()
+            {
+                Description = "Mustang"
+            },
+            new()
+            {
+                Description = "Ranger"
+            },
+            new()
+            {
+                Description = "Explorer"
             }
+        }
+    },
+    new()
+    {
+        Name = "Chevrolet",
+        Models = new List<Model>()
+        {
+            new()
+            {
+                Description = "Cruze"
+            },
+            new()
+            {
+                Description = "Onix"
+            },
+            new()
+            {
+                Description = "Spark"
+            },
+            new()
+            {
+                Description = "Equinox"
+            },
+            new()
+            {
+                Description = "Traverse"
+            },
+            new()
+            {
+                Description = "Corvette"
+            }
+        }
+    },
+    new()
+    {
+        Name = "Fiat",
+        Models = new List<Model>()
+        {
+            new()
+            {
+                Description = "Argo"
+            },
+            new()
+            {
+                Description = "Cronos"
+            },
+            new()
+            {
+                Description = "Mobi"
+            },
+            new()
+            {
+                Description = "Uno"
+            },
+            new()
+            {
+                Description = "Toro"
+            },
+            new()
+            {
+                Description = "500"
+            }
+        }
+    },
+    new()
+    {
+        Name = "Toyota",
+        Models = new List<Model>()
+        {
+            new()
+            {
+                Description = "Corolla"
+            },
+            new()
+            {
+                Description = "Camry"
+            },
+            new()
+            {
+                Description = "Yaris"
+            },
+            new()
+            {
+                Description = "Rav4"
+            },
+            new()
+            {
+                Description = "Highlander"
+            },
+            new()
+            {
+                Description = "Tacoma"
+            }
+        }
+    },
+    new()
+    {
+        Name = "Honda",
+        Models = new List<Model>()
+        {
+            new()
+            {
+                Description = "Civic"
+            },
+            new()
+            {
+                Description = "Accord"
+            },
+            new()
+            {
+                Description = "Fit"
+            },
+            new()
+            {
+                Description = "CR-V"
+            },
+            new()
+            {
+                Description = "Pilot"
+            },
+            new()
+            {
+                Description = "Odyssey"
+            }
+        }
+    },
+    new()
+    {
+        Name = "Nissan",
+        Models = new List<Model>()
+        {
+            new()
+            {
+                Description = "Sentra"
+            },
+            new()
+            {
+                Description = "Altima"
+            },
+            new()
+            {
+                Description = "Versa"
+            },
+            new()
+            {
+                Description = "Rogue"
+            },
+            new()
+            {
+                Description = "Pathfinder"
+            },
+            new()
+            {
+                Description = "Maxima"
+            }
+        }
+    }
         };
 
 

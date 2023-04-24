@@ -18,7 +18,7 @@ export const Navigation = (): JSX.Element => {
                             />
                         );
                     })}
-                    <Route path='/*' element={<Navigate to='/vehicles' replace />} />
+                    <Route path='/*' element={<Navigate to='/' replace />} />
                 </Routes>
             </BrowserRouter>
         </Suspense>

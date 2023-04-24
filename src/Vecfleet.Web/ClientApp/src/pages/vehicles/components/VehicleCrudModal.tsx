@@ -9,7 +9,6 @@ const VehicleCrudModal = () => {
 
     const {selectedVehicle, showModal, setShowModal}=
         useVehicleStore((state) => ({selectedVehicle:state.selectedVehicle, showModal:state.showModal,setShowModal:state.setShowModal}));
-    debugger;
     const create:boolean=selectedVehicle === null;
     let title= "Modificar Vehículo";
     if(create)

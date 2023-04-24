@@ -11,7 +11,6 @@ const useErrorHandler = ({showGenericErrorToast}: IUseErrorHandler = {showGeneri
 
 
     const handleError = (error: any) => {
-        debugger;
         if (error instanceof Error) {
             const axiosError = error as AxiosError;
             const apiResult = axiosError.response?.data as IApiResult;

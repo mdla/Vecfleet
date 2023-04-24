@@ -59,7 +59,6 @@ const VehicleForm = (props: Props): JSX.Element => {
     }
 
     useEffect(() => {
-        debugger;
         formik.resetForm();
     },[props.dto])
 

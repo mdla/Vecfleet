@@ -3,16 +3,18 @@ import {IDataResponse} from "../../../models/result.type";
 import {EndpointConst} from "./endpointConst";
 import {VehicleDto} from "../models/vehicles.type";
 
-export const getVehicles = async (brandId: number | null, modelId: number | null) => await getData<IDataResponse<VehicleDto[]>>(EndpointConst.LIST_VEHICLES, {
-    brandId,
-    modelId
-}).then(value => {
-    if (!value.result.success)
-        throw Error(value.result.errors[0])
-    return value.data;
-}).catch(reason => {
-    throw reason;
-});
+export const getVehicles = async (brandId: number | null, modelId: number | null) => {
+    return await getData<IDataResponse<VehicleDto[]>>(EndpointConst.LIST_VEHICLES, {
+        brandId: brandId == 0 ? undefined : brandId,
+        modelId: modelId == 0 || brandId == 0  ? undefined : modelId,
+    }).then(value => {
+        if (!value.result.success)
+            throw Error(value.result.errors[0])
+        return value.data;
+    }).catch(reason => {
+        throw reason;
+    });
+}
 
 export const createVehicles = async (vehicle: VehicleDto) => await postData<IDataResponse<VehicleDto>>(EndpointConst.CREATE_VEHICLES, vehicle).then(value => {
     if (!value.result.success)

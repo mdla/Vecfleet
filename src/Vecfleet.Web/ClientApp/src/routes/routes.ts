@@ -13,8 +13,8 @@ interface Route {
 
 export const routes: Route[] = [
     {
-        to: '/vehicles',
-        path: '/vehicles',
+        to: '/',
+        path: '/',
         Component: VehiclesPage,
         name: 'vehicles',
     },

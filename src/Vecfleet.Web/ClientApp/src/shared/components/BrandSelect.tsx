@@ -19,14 +19,13 @@ const BrandSelect = (props: IProps): JSX.Element => {
         return <div>Error cargando Marca</div>
     return (
         <>
-            {isLoading && <div>Cargando Marca...</div>}
             <FormLabel htmlFor={props.id}>Marca</FormLabel>
             <FormSelect id={props.id}
                         name={props.name}
                         onChange={props.onChange}
                         value={props.brandId}
                         onBlur={props.onBlur}>
-                <option value={""}>Seleccione una Marca</option>
+                <option value={"0"}>Seleccione una Marca</option>
                 {brands.map(item => (
                     <option key={item.id} value={item.id}>{item.name}</option>
                 ))}

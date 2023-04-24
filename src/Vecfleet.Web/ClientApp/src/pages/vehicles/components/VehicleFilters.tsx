@@ -1,20 +1,11 @@
 import {Button, ButtonGroup, Col, Form, FormGroup, Row} from "react-bootstrap";
-import {useState} from "react";
+
 import BrandSelect from "../../../shared/components/BrandSelect";
 import ModelSelect from "../../../shared/components/ModelSelect";
 import {FormikHelpers, useFormik} from "formik";
 import {getVehicles} from "../services/vehicle.services";
 import {VehicleDto} from "../models/vehicles.type";
 import {useVehicleStore} from "../store/vehicleStore";
-
-interface Props {
-
-}
-
-interface IState {
-    brandId: number | null,
-    modelId: number | null,
-}
 
 interface iFormValuesDto {
     brandId: number | null,
@@ -26,7 +17,7 @@ const InitialValues: iFormValuesDto = {
     modelId: null
 };
 
-const VehicleFilters = (props: Props) => {
+const VehicleFilters = () => {
     const {
         setVehicles
     } = useVehicleStore();

@@ -4,14 +4,23 @@ import {EndpointConst} from "../../pages/vehicles/services/endpointConst";
 import {BrandDto, ModelDto} from "../../models/common.type";
 import {IDataResponse} from "../../models/result.type";
 
-export const useModel = (brandId: number| null): [ModelDto[], boolean, string|undefined] => {
+export const useModel = (brandId?: number | null): [ModelDto[], boolean, boolean] => {
     const [models, setModels] = useState<ModelDto[]>([]);
     const [isLoading, setIsLoading] = useState(false);
-    const [error, setError] = useState<string>("");
+    const [error, setError] = useState<boolean>(false);
 
     useEffect(() => {
-        if(brandId == null)
+        if (brandId == null)
             return;
+        let value:boolean=false;
+        try {
+            value= isNaN(Number(brandId));
+        } catch (e) {
+            return ;
+        }
+        if(value)
+            return;
+
         setIsLoading(true);
         getData<IDataResponse<ModelDto[]>>(EndpointConst.FILTER_MODEL, {
             id: brandId
@@ -20,13 +29,14 @@ export const useModel = (brandId: number| null): [ModelDto[], boolean, string|un
                 setIsLoading(false);
                 if (response.result.success) {
                     setModels(response.data);
+                    setError(true);
                 } else {
-                    setError(response.result.errors[0] ?? undefined);
+                    setError(true);
                 }
             })
             .catch((error) => {
                 setIsLoading(false);
-                setError("Error");
+                setError(true);
             });
     }, [brandId]);
 
